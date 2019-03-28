@@ -1,5 +1,5 @@
-# NavExercise
-Responsive Navigation bar exercise
+# Cubilete
+Responsive Cubilete game
 
 ## Install Dependencies
 To install dependecies run`npm i`
