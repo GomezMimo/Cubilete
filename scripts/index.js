@@ -5,7 +5,17 @@
 class Cubilete {
     constructor(document) {
         this.sendButton = document.querySelector('#send-form__button');
-        this.diceValues = [7, 8, 'J', 'Q', 'K', 'AS'];
+        this.diceValues = [7, 8, 9, 10, 11, 12];
+        this.literalDiceValues = {
+            7: 7,
+            8: 8,
+            9: 'J',
+            10: 'Q',
+            11: 'K',
+            12: 'AS',
+            100: '-'
+        };
+        this.playersInformation = [];
 
         this.sendButton.addEventListener('click', () => {
             this.sendForm();
@@ -20,9 +30,13 @@ class Cubilete {
 
         if (numberOfPlayers > 1 && numberOfPlayers < 6) {
             for (let i = 0; i < numberOfPlayers; i++) {
+                this.playersInformation.push({
+                   name: `Jugador #${i + 1}`
+                });
+
                 players += `<div class='player-board player-board-grill-${numberOfPlayers}'>
-                                <h2>Jugador #${i + 1}</h2>
-                                <div class="dice__container"><span class="dice__value" id="dice_value${i}">${this.diceValues[5]}</span></div>                             
+                                <h2>${this.playersInformation[i].name}</h2>
+                                <div class="dice__container"><span class="dice__value" id="dice_value${i}">${this.literalDiceValues[12]}</span></div>                             
                                 <button class="player-play__button">Tirar</button>
                             </div>`;
             }
@@ -37,8 +51,12 @@ class Cubilete {
                 throwDiceButtons.forEach((button, index) => {
                     const diceValue = document.getElementById(`dice_value${index}`);
                     button.addEventListener('click', () => {
-                        diceValue.innerText = this.getRandomDiceValue();;
+                        const newDiceValue = this.getRandomDiceValue();
+                        diceValue.innerText = this.literalDiceValues[newDiceValue];
+                        this.playersInformation[index].diceValue = newDiceValue;
+                        button.disabled = true;
 
+                        this.orderPlayerPositions();
                     })
                 });
 
@@ -51,6 +69,25 @@ class Cubilete {
     getRandomDiceValue() {
         const randomNumber = Math.floor(Math.random () * 6);
         return this.diceValues[randomNumber];
+    }
+
+    orderPlayerPositions() {
+        const tableOfResultsContainer = document.querySelector('.table-of-results__container');
+        const tableOfResults = this.playersInformation.sort((a, b) => b.diceValue - a.diceValue);
+        let tableResultsContent = `<table><tr><th colspan="2">Turnos</th></tr><tr><th>Nombre</th><th>Carta</th></tr>`;
+
+        tableOfResults.forEach(result => {
+            tableResultsContent += `                                
+                                <tr>
+                                    <td>${result.name}</td>
+                                    <td>${this.literalDiceValues[result.diceValue]}</td>
+                                </tr>
+                
+            `;
+        });
+        tableResultsContent += `</table>`;
+
+        tableOfResultsContainer.innerHTML = tableResultsContent;
     }
 }
 
