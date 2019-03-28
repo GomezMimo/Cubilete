@@ -1,0 +1,22 @@
+{
+  "name": "Cubilete",
+  "version": "1.0.0",
+  "description": "Juego de cubilete",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha './scripts/index.test.js'",
+    "start": "live-server"
+  },
+  "keywords": [
+    "cubilete",
+    "juego",
+    "ucc"
+  ],
+  "author": "Juan Gomez",
+  "license": "ISC",
+  "dependencies": {
+    "jsdom": "^11.6.2",
+    "live-server": "^1.2.0",
+    "mocha": "^5.0.0"
+  }
+}

@@ -1,0 +1,387 @@
+@import "fonts.css";
+
+/* General styles */
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+  }
+  
+body {
+	background: #FFF;
+	color: #FFF;
+}
+
+a {
+	color: #000;
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+}
+
+footer {
+	display: none;
+}
+
+/* Main container */
+.main-container {
+	height: 100vh;
+	min-width: 1080px;
+	width: 100vw;
+}
+
+.main-container__active-menu {
+	background-color: rgba(0, 0, 0, 0.5);    
+}
+
+/*navigation bar*/
+nav {
+	background-color: wheat;
+	color: #000000;
+	height: 75px;
+	margin-bottom: 20px;
+	min-width: 1080px;
+	width: 100vw;
+}
+
+.nav-huge-image__item {
+	display: inline-block;
+}
+
+.nav-huge-image__item img {
+	margin-right: 48px;
+	width: 60px;
+}
+
+.primary-nav {
+	align-items: center;
+	display: flex;
+	height: 75px;
+	min-width: 1080px;
+	padding: 0 24px;
+	position: absolute;
+}
+
+.primary-nav h1 {
+	display: inline-block;
+	font-size: 30px;
+}
+
+.primary-nav img {
+	display: inline-block;
+	margin-right: 14px;
+}
+
+.primary-nav > .primary-nav__item {
+	cursor: pointer;
+	display: inline-block;
+	font: 21px/48px HUGEAvantGardeBold;
+	padding: 0 24px;
+	height: 72px;
+	padding-top: 17px;
+}
+
+.primary-nav > .primary-nav__item > a {
+	color: #FFF;
+}
+
+.primary-nav > .primary-nav__item:hover {
+	background: #FFF;
+}
+
+.primary-nav > .primary-nav__item:hover >  a {
+	color: #EC008C;
+}
+
+.primary-nav__item-active {
+	background-color: #FFF;
+	color: #EC008C;
+}
+
+.primary-nav  > .primary-nav__item-active > a {
+	color: #EC008C;
+}
+
+/* Secondary nav */
+.secondary-nav {
+	background-color: #FFF;
+	margin-left: -24px;
+	padding: 12px 0;
+	position: absolute;
+	top: 72px;
+	visibility: hidden;
+	width: 225px;
+	z-index: 2;
+}
+
+.secondary-nav > .secondary-nav__item {
+	font: 16px/48px Galaxie;
+	height: 48px;
+	padding: 0 24px;
+	width: 100%;
+}
+
+.secondary-nav > .secondary-nav__item:hover {
+	background-color: #EEE;
+}
+
+.secondary-nav > .secondary-nav__item > a {
+	color: #000;
+}
+
+.secondary-nav > .secondary-nav__item:hover > a {
+	color: #EC008C;
+}
+
+.secondary-nav-open__active {
+	visibility: visible;
+}
+
+/* Main Content container */
+.main-content__container {
+	color: #000000;
+	position: relative;
+}
+
+.main-content_image__container {
+	width: 100%;
+}
+
+.desktop__image {
+	display: block;
+	height: 50%;
+	margin: 0 auto;
+	margin-bottom: 50px;
+	width: 50%;
+}
+
+.desktop-image__text {
+	font: 120px/132px HUGEAvantGardeBold;
+	left: 0;
+	padding: 0 24px;
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	right: 0;
+	text-align: center;
+	top: 20%;
+}
+
+.lorem-text__container {
+	color: #000;
+	font: 24px/36px Galaxie;
+	margin: 0 auto;
+	margin-bottom: 50px;
+	text-align: justify;
+	width: 968px;
+}
+.hide-element {
+	display: none;
+}
+
+@media screen and (max-width: 767px) {
+	/* General Styles */
+	nav {
+		height: 75px;
+		min-width: auto;
+	}
+
+	.main-container {
+		max-width: 767px;
+		min-width: 100vw;
+		overflow-x: hidden;
+	}
+
+	.primary-nav > .primary-nav__item {
+		background-color: #FFF;
+		display: block;
+		cursor: pointer;
+		font: 21px/48px HUGEAvantGardeBold;
+		height: 48px;
+		padding: 0 24px;
+	}
+
+	.primary-nav > .primary-nav__item:hover {
+		background-color: #EEE;
+	}
+
+	.primary-nav > .primary-nav__item > a {
+		color: #000;
+	}
+
+	.primary-nav > .primary-nav__item-active {
+		height: auto;
+	}
+
+	.primary-nav__arrow-active > span:first-child {
+		transform: rotate(-45deg);
+	}
+
+	.primary-nav__arrow-active > span:nth-child(2) {
+		transform: rotate(45deg);
+		right: 14px;
+		position: relative;
+	}
+
+
+	.primary-nav .primary-nav__item-active,
+	.primary-nav .primary-nav__item-active:hover {
+		background: #FFF;
+	}
+
+	.primary-nav .primary-nav__item-active:hover a {
+		color: #000;
+	}
+
+	nav > .nav-hamburguer-icon > .primary-nav.primary-nav__mobile {
+		border: 3px solid red;
+		left: -100% !important;
+		display: none !important;
+	}
+
+	/* Secondary nav */
+	.secondary-nav {
+		margin: 0;
+		padding: 0;
+		position: unset;
+		width: 100%;
+	}
+
+	.secondary-nav > .secondary-nav__item {
+		margin-left: -24px;
+		margin-right: -24px;
+		padding-left: 0 0 0 24px;
+		width: auto;
+	}
+
+	.secondary-nav > .secondary-nav__item:hover {
+		background-color: #EEE;
+	}
+
+	.secondary-nav > .secondary-nav__item:hover a {
+		color: #EC008C;
+	}
+
+	.nav-arrow {
+		position: absolute;
+		right: 0;
+		width: 48px;
+	}
+
+	.nav-arrow span {
+		background: #EC008C;
+		border: 2px solid #EC008C;
+		display: inline-block;
+		width: 17px;
+	}
+	
+	.nav-arrow > span:first-child {
+		transform: rotate(45deg);
+	}
+	
+	.nav-arrow > span:nth-child(2) {
+		transform: rotate(-45deg);
+		right: 14px;
+		position: relative;
+	}
+
+	.primary-nav__arrow-active > span:first-child {
+		transform: rotate(-45deg);
+	}
+
+	.primary-nav__arrow-active > span:nth-child(2) {
+		transform: rotate(45deg);
+		right: 14px;
+		position: relative;
+	}
+
+	/*Main Content Container*/
+	.main-content__container {
+		color: #000;
+		max-width: 100vw;
+	}
+
+	.desktop__image {
+		margin-bottom: 50px;
+		width: 100vw;
+	}
+
+	.desktop-image__text {
+		font: 44px/48px HUGEAvantGardeBold;
+		margin-bottom: 50px;
+		padding: 0 24px;
+		position: relative;
+		text-align: center;
+	}
+
+	.lorem-text__container {
+		font: 14px/24px Galaxie;
+		padding: 0 24px;
+		width: 100vw;
+		text-align: justify;
+	}
+}
+
+
+/*New Classes*/
+.play-game-content__container {
+	margin: 0 auto;
+	margin-top: 20px;
+	width: 80%;
+}
+
+.player-board {
+	border: 1px solid black;
+	display: inline-block;
+	height: 320px;
+	margin: 0 5px;
+	text-align: center;
+}
+
+.player-board h2 {
+	margin: 35px;
+}
+
+.player-board-grill-2 {
+	border: 1px solid black;
+	display: inline-block;
+	width: 48%;
+}
+
+.player-board-grill-3 {
+	border: 1px solid black;
+	display: inline-block;
+	width: 32%;
+}
+
+.player-board-grill-4 {
+	border: 1px solid black;
+	display: inline-block;
+	width: 22%;
+}
+
+.player-board-grill-5 {
+	width: 18%;
+}
+
+.player-play__button {
+	width: 100px;
+}
+
+.dice__container {
+	align-items: center;
+	border: 1px solid red;
+	display: flex;
+	height: 100px;
+	margin: 0 auto;
+	margin-bottom: 60px;
+	width: 100px;
+}
+
+.dice__value {
+	display: block;
+	text-align: center;
+	width: 100%;
+}
