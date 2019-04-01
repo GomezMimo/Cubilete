@@ -12,10 +12,24 @@ class Cubilete {
             9: 'J',
             10: 'Q',
             11: 'K',
-            12: 'AS',
-            100: '-'
+            12: 'AS'
         };
+        this.gameMoves = [
+            {
+                name: 'carabina de Ases',
+                move: [12, 12, 12, 12, 12]
+            },
+            {
+                name: 'carabina de Reyes',
+                move: [11, 11, 11, 11, 11]
+            },
+            {
+                name: 'carabina de Reyes sucia',
+                move: [12, 12, 11, 11, 11]
+            }
+        ];
         this.playersInformation = [];
+        this.dicesToBeChanged = [];
         this.tableOfResultsContainer = document.querySelector('.table-of-results__container');
         this.gameContainer = document.querySelector('.play-game-content__container');
         this.playerPosition = 0;
@@ -36,10 +50,10 @@ class Cubilete {
                 this.playersInformation.push({
                    name: `Jugador #${i + 1}`
                 });
-
+                console.log('i', i);
                 players += `<div class='player-board player-board-grill-${numberOfPlayers}'>
                                 <h2>${this.playersInformation[i].name}</h2>
-                                <div class="dice__container"><span class="dice__value" id="dice_value${i}">${this.literalDiceValues[12]}</span></div>                             
+                                <div class="dice__container"><span class="dice__value" id="dice_value_${i}">${this.literalDiceValues[12]}</span></div>                             
                                 <button class="player-play__button">Tirar</button>
                             </div>`;
             }
@@ -52,7 +66,7 @@ class Cubilete {
                 const throwDiceButtons = Array.from(document.querySelectorAll('.player-play__button'));
 
                 throwDiceButtons.forEach((button, index) => {
-                    const diceValue = document.getElementById(`dice_value${index}`);
+                    const diceValue = document.getElementById(`dice_value_${index}`);
                     button.addEventListener('click', () => {
                         const newDiceValue = this.getRandomDiceValue();
                         diceValue.innerText = this.literalDiceValues[newDiceValue];
@@ -76,11 +90,10 @@ class Cubilete {
 
     orderPlayerPositions() {
         this.playersInformation = this.playersInformation.sort((a, b) => b.diceValue - a.diceValue);
-        let playersInGame = 0;
-
         this.tableOfResultsContainer.innerHTML = this.paintTable(this.playersInformation, 'Turnos', 'Turno', 'Nombre', 'Carta');
+        const playersInGame = this.playersInformation.filter(player => player.diceValue !== undefined);
 
-        if (playersInGame === this.playersInformation.length) {
+        if (playersInGame.length === this.playersInformation.length) {
             this.tableOfResultsContainer.innerHTML += `<button class="continue-game__button">Continuar</button>`;
 
             const continueButton = document.querySelector('.continue-game__button');
@@ -93,23 +106,26 @@ class Cubilete {
     playByRoundsGame() {
         const winner = this.playersInformation.find(player => player.points >= 10);
         const playerInGame = this.playersInformation[this.playerPosition];
-        playerInGame.firstValueDice = this.getRandomDiceValue();
-        playerInGame.secondValueDice = this.getRandomDiceValue();
-        playerInGame.thirdValueDice = this.getRandomDiceValue();
-        playerInGame.fourthValueDice = this.getRandomDiceValue();
-        playerInGame.fifthValueDice = this.getRandomDiceValue();
+        playerInGame.handGame = [];
+
+        for(let i = 0; i < 5; i++) {
+            playerInGame.handGame.push(this.getRandomDiceValue());
+        }
 
         if(!winner) {
             this.gameContainer.innerHTML = `<div class='player-in-game__board'>
                                 <h2>${this.playersInformation[this.playerPosition].name}</h2>
                                 <div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id="dice_value${0}">${this.literalDiceValues[playerInGame.firstValueDice]}</span></div></div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id="dice_value${0}">${this.literalDiceValues[playerInGame.secondValueDice]}</span></div></div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id="dice_value${0}">${this.literalDiceValues[playerInGame.thirdValueDice]}</span></div></div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id="dice_value${0}">${this.literalDiceValues[playerInGame.fourthValueDice]}</span></div></div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id="dice_value${0}">${this.literalDiceValues[playerInGame.fifthValueDice]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=0>${this.literalDiceValues[playerInGame.handGame[0]]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=1>${this.literalDiceValues[playerInGame.handGame[1]]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=2>${this.literalDiceValues[playerInGame.handGame[2]]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=3>${this.literalDiceValues[playerInGame.handGame[3]]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=4>${this.literalDiceValues[playerInGame.handGame[4]]}</span></div></div>
                                 </div>
-                                <button class="next-player__button">Tirar</button>
+                                <div class="game-buttons__container">
+                                    <button class="repeat-move__button" disabled="true">Volver a tirar</button>
+                                    <button class="next-player__button">Siguiente jugador</button>  
+                                </div>
                             </div>`;
 
             document.querySelector('.next-player__button').addEventListener('click', () => {
@@ -120,23 +136,50 @@ class Cubilete {
                 }
 
                 this.playByRoundsGame();
-            })
+            });
+
+            const diceContainers = Array.from(document.querySelectorAll('.dice__container'));
+
+            diceContainers.forEach(container => {
+                container.addEventListener('click', () => {
+                    container.classList.toggle('dice__container-clicked');
+
+                    console.log('container id', container.childNodes[0].id);
+
+                    if (container.classList.contains('dice__container__clicked')) {
+                        this.dicesToBeChanged.push({
+                            cardId: container.childNodes[0].id
+                        })
+                    } else {
+
+                    }
+
+                    if (this.dicesToBeChanged.length > 0) {
+                        const repeatMoveButton = document.querySelectorAll('.repeat-move__button');
+                        repeatMoveButton.disabled = false;
+                    }
+                })
+            });
+
+           // const diceClickedContainers = Array.from(document.querySelectorAll('.dice__container-clicked'));
+
+            console.log('diceClickedContainers', this.dicesToBeChanged);
+
+
+
         } else {
             alert('congratulations Mr Tanaka, you are an engineer');
         }
+
+        console.log('this.playersInformation', this.playersInformation);
 
         this.tableOfResultsContainer.innerHTML = this.paintTable(this.playersInformation, 'Turnos', 'Turno', 'Nombre', 'Puntos');
     }
 
     paintTable(iterableElement, titulo, th1, th2, th3) {
         let tableResultsContent = `<table><tr><th colspan="3">${titulo}</th></tr><tr><th>${th1}</th><th>${th2}</th><th>${th3}</th></tr>`;
-        let playersInGame = 0;
 
         iterableElement.forEach((result, index) => {
-            if (this.literalDiceValues[result.diceValue] !== undefined) {
-                playersInGame++;
-            }
-
             tableResultsContent += `                                
                                 <tr>
                                     <td>${index + 1}</td>

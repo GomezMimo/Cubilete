@@ -373,11 +373,17 @@ nav {
 .dice__container {
 	align-items: center;
 	border: 1px solid red;
+	cursor: pointer;
 	display: flex;
 	height: 100px;
 	margin: 0 auto;
 	margin-bottom: 60px;
 	width: 100px;
+}
+
+.dice__container-clicked {
+	background: #000000;
+	color: #EC008C;
 }
 
 .dice__value {
@@ -417,4 +423,16 @@ nav {
 	float: left;
 	height: 320px;
 	width: 20%;
+}
+
+.game-buttons__container {
+	text-align: center;
+}
+
+.game-buttons__container button {
+	border-radius: 10px;
+	cursor: pointer;
+	font-size: 16px;
+	margin: 10px 10px;
+	padding: 10px;
 }
