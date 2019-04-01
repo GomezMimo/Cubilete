@@ -386,8 +386,12 @@ nav {
 	width: 100%;
 }
 
+.table-of-results__container {
+	padding-left: 10%;
+}
+
 .table-of-results__container table {
-	margin: 30px 0 0 10%;
+	margin: 30px 0 10px 0;
 	width: 300px;
 }
 
@@ -395,4 +399,22 @@ nav {
 	border: 1px solid black;
 	color: #000000;
 	text-align: center;
+}
+
+.player-in-game__board {
+	border: 1px solid black;
+	width: 100%;
+}
+
+.player-in-game__board h2 {
+	text-align: center;
+}
+
+.dice-in-game__container {
+	align-items: center;
+	border: 1px solid black;
+	display: flex;
+	float: left;
+	height: 320px;
+	width: 20%;
 }
