@@ -1,5 +1,5 @@
 /**
- * Inicitialize Navigation functionality.
+ * Inicitialize Cubilete functionality.
  * @class Cubilete
  */
 class Cubilete {
@@ -50,7 +50,7 @@ class Cubilete {
                 this.playersInformation.push({
                    name: `Jugador #${i + 1}`
                 });
-                console.log('i', i);
+
                 players += `<div class='player-board player-board-grill-${numberOfPlayers}'>
                                 <h2>${this.playersInformation[i].name}</h2>
                                 <div class="dice__container"><span class="dice__value" id="dice_value_${i}">${this.literalDiceValues[12]}</span></div>                             
@@ -109,18 +109,23 @@ class Cubilete {
         playerInGame.handGame = [];
 
         for(let i = 0; i < 5; i++) {
-            playerInGame.handGame.push(this.getRandomDiceValue());
+            playerInGame.handGame.push({
+                id: i,
+                value: this.getRandomDiceValue()
+            });
         }
+
+        console.log('playerInGame.handGame', playerInGame.handGame[0].value);
 
         if(!winner) {
             this.gameContainer.innerHTML = `<div class='player-in-game__board'>
                                 <h2>${this.playersInformation[this.playerPosition].name}</h2>
                                 <div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=0>${this.literalDiceValues[playerInGame.handGame[0]]}</span></div></div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=1>${this.literalDiceValues[playerInGame.handGame[1]]}</span></div></div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=2>${this.literalDiceValues[playerInGame.handGame[2]]}</span></div></div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=3>${this.literalDiceValues[playerInGame.handGame[3]]}</span></div></div>
-                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=4>${this.literalDiceValues[playerInGame.handGame[4]]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=0>${this.literalDiceValues[playerInGame.handGame[0].value]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=1>${this.literalDiceValues[playerInGame.handGame[1].value]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=2>${this.literalDiceValues[playerInGame.handGame[2].value]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=3>${this.literalDiceValues[playerInGame.handGame[3].value]}</span></div></div>
+                                    <div class="dice-in-game__container"><div class="dice__container"><span class="dice__value" id=4>${this.literalDiceValues[playerInGame.handGame[4].value]}</span></div></div>
                                 </div>
                                 <div class="game-buttons__container">
                                     <button class="repeat-move__button" disabled="true">Volver a tirar</button>
@@ -139,41 +144,72 @@ class Cubilete {
             });
 
             const diceContainers = Array.from(document.querySelectorAll('.dice__container'));
+            const repeatMoveButton = document.querySelector('.repeat-move__button');
+
+            repeatMoveButton.addEventListener('click', this.generateNewDiceValues);
 
             diceContainers.forEach(container => {
                 container.addEventListener('click', () => {
+                    this.diceClickedToggle(container);
+                    /*const cardId = container.childNodes[0].id;
                     container.classList.toggle('dice__container-clicked');
 
-                    console.log('container id', container.childNodes[0].id);
-
-                    if (container.classList.contains('dice__container__clicked')) {
+                    if (container.classList.contains('dice__container-clicked')) {
                         this.dicesToBeChanged.push({
-                            cardId: container.childNodes[0].id
-                        })
+                            cardId
+                        });
                     } else {
-
+                        const diceClickedToBeRemoved = this.dicesToBeChanged.find(dice => dice.cardId === cardId);
+                        console.log('diceClickedToBeRemoved', diceClickedToBeRemoved);
+                        this.dicesToBeChanged.splice(this.dicesToBeChanged.indexOf(diceClickedToBeRemoved), 1);
                     }
 
-                    if (this.dicesToBeChanged.length > 0) {
-                        const repeatMoveButton = document.querySelectorAll('.repeat-move__button');
-                        repeatMoveButton.disabled = false;
-                    }
-                })
+                    repeatMoveButton.disabled = this.dicesToBeChanged.length <= 0;*/
+                });
             });
 
-           // const diceClickedContainers = Array.from(document.querySelectorAll('.dice__container-clicked'));
 
-            console.log('diceClickedContainers', this.dicesToBeChanged);
-
-
-
+            repeatMoveButton.addEventListener('click', this.generateNewDiceValues.bind(this));
         } else {
             alert('congratulations Mr Tanaka, you are an engineer');
         }
 
-        console.log('this.playersInformation', this.playersInformation);
 
         this.tableOfResultsContainer.innerHTML = this.paintTable(this.playersInformation, 'Turnos', 'Turno', 'Nombre', 'Puntos');
+    }
+
+    diceClickedToggle(container) {
+        const repeatMoveButton = document.querySelector('.repeat-move__button');
+        const cardId = container.childNodes[0].id;
+        container.classList.toggle('dice__container-clicked');
+
+        if (container.classList.contains('dice__container-clicked')) {
+            this.dicesToBeChanged.push({
+                cardId
+            });
+        } else {
+            const diceClickedToBeRemoved = this.dicesToBeChanged.find(dice => dice.cardId === cardId);
+            console.log('diceClickedToBeRemoved', diceClickedToBeRemoved);
+            this.dicesToBeChanged.splice(this.dicesToBeChanged.indexOf(diceClickedToBeRemoved), 1);
+        }
+
+        repeatMoveButton.disabled = this.dicesToBeChanged.length <= 0;
+    }
+
+    generateNewDiceValues() {
+        const dicesTobeToggled = [];
+        if (this.dicesToBeChanged) {
+            this.dicesToBeChanged.forEach(dice => {
+                const diceElementById = document.getElementById(`${dice.cardId}`);
+                const diceObjectElementById = this.playersInformation[this.playerPosition].handGame.find(handDice => handDice.id === Number(dice.cardId));
+
+                diceObjectElementById.value = this.getRandomDiceValue();
+                diceElementById.innerHTML = this.literalDiceValues[diceObjectElementById.value];
+                dicesTobeToggled.push(diceElementById.parentNode);
+            });
+
+            dicesTobeToggled.forEach(dice => this.diceClickedToggle(dice));
+        }
     }
 
     paintTable(iterableElement, titulo, th1, th2, th3) {
