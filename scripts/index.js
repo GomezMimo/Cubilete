@@ -127,6 +127,7 @@ class Cubilete {
                                 </div>
                                 <div class="game-buttons__container">
                                     <button class="repeat-move__button" disabled="true">Volver a tirar</button>
+                                    <button class="complete__button" >Completar Juego</button>
                                     <button class="next-player__button">Siguiente jugador</button>  
                                 </div>
                             </div>`;
@@ -144,6 +145,8 @@ class Cubilete {
 
             const diceContainers = Array.from(document.querySelectorAll('.dice__container'));
             const repeatMoveButton = document.querySelector('.repeat-move__button');
+
+            document.querySelector('.complete__button').addEventListener('click', this.checkHandValues.bind(this));
 
             repeatMoveButton.addEventListener('click', this.generateNewDiceValues);
 
@@ -196,13 +199,26 @@ class Cubilete {
                 dicesTobeToggled.push(diceElementById.parentNode);
             });
 
-            if (this.attempts <= 3) {
-                this.attempts++;
-            } else {
-
-            }
+            this.attempts++;
 
             dicesTobeToggled.forEach(dice => this.diceClickedToggle(dice));
+        }
+    }
+
+    checkHandValues() {
+        const playerInGame = this.playersInformation[this.playerPosition];
+        let points = 0;
+
+        playerInGame.handGame.forEach(game => {
+            points += game.value
+        });
+
+        if (points === 60) {
+            alert('you win')
+        } else if (points === 55) {
+            alert('5 points')
+        } else {
+
         }
     }
 
