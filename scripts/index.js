@@ -33,7 +33,7 @@ class Cubilete {
         this.tableOfResultsContainer = document.querySelector('.table-of-results__container');
         this.gameContainer = document.querySelector('.play-game-content__container');
         this.playerPosition = 0;
-
+        this.attempts = 0;
         this.sendButton.addEventListener('click', () => {
             this.sendForm();
         });
@@ -115,8 +115,6 @@ class Cubilete {
             });
         }
 
-        console.log('playerInGame.handGame', playerInGame.handGame[0].value);
-
         if(!winner) {
             this.gameContainer.innerHTML = `<div class='player-in-game__board'>
                                 <h2>${this.playersInformation[this.playerPosition].name}</h2>
@@ -140,6 +138,7 @@ class Cubilete {
                     this.playerPosition++;
                 }
 
+                this.attempts = 0;
                 this.playByRoundsGame();
             });
 
@@ -149,31 +148,13 @@ class Cubilete {
             repeatMoveButton.addEventListener('click', this.generateNewDiceValues);
 
             diceContainers.forEach(container => {
-                container.addEventListener('click', () => {
-                    this.diceClickedToggle(container);
-                    /*const cardId = container.childNodes[0].id;
-                    container.classList.toggle('dice__container-clicked');
-
-                    if (container.classList.contains('dice__container-clicked')) {
-                        this.dicesToBeChanged.push({
-                            cardId
-                        });
-                    } else {
-                        const diceClickedToBeRemoved = this.dicesToBeChanged.find(dice => dice.cardId === cardId);
-                        console.log('diceClickedToBeRemoved', diceClickedToBeRemoved);
-                        this.dicesToBeChanged.splice(this.dicesToBeChanged.indexOf(diceClickedToBeRemoved), 1);
-                    }
-
-                    repeatMoveButton.disabled = this.dicesToBeChanged.length <= 0;*/
-                });
+                container.addEventListener('click', () => this.diceClickedToggle(container));
             });
-
 
             repeatMoveButton.addEventListener('click', this.generateNewDiceValues.bind(this));
         } else {
             alert('congratulations Mr Tanaka, you are an engineer');
         }
-
 
         this.tableOfResultsContainer.innerHTML = this.paintTable(this.playersInformation, 'Turnos', 'Turno', 'Nombre', 'Puntos');
     }
@@ -189,24 +170,37 @@ class Cubilete {
             });
         } else {
             const diceClickedToBeRemoved = this.dicesToBeChanged.find(dice => dice.cardId === cardId);
-            console.log('diceClickedToBeRemoved', diceClickedToBeRemoved);
             this.dicesToBeChanged.splice(this.dicesToBeChanged.indexOf(diceClickedToBeRemoved), 1);
         }
 
         repeatMoveButton.disabled = this.dicesToBeChanged.length <= 0;
+
+        if (this.attempts >= 3) {
+            const dices = Array.from(document.querySelectorAll('.dice__container'));
+            dices.forEach(dice => dice.classList.add('avoid-click'));
+        }
     }
 
     generateNewDiceValues() {
         const dicesTobeToggled = [];
+
         if (this.dicesToBeChanged) {
+            const playerInformation = this.playersInformation[this.playerPosition];
+
             this.dicesToBeChanged.forEach(dice => {
                 const diceElementById = document.getElementById(`${dice.cardId}`);
-                const diceObjectElementById = this.playersInformation[this.playerPosition].handGame.find(handDice => handDice.id === Number(dice.cardId));
+                const diceObjectElementById = playerInformation.handGame.find(handDice => handDice.id === Number(dice.cardId));
 
                 diceObjectElementById.value = this.getRandomDiceValue();
                 diceElementById.innerHTML = this.literalDiceValues[diceObjectElementById.value];
                 dicesTobeToggled.push(diceElementById.parentNode);
             });
+
+            if (this.attempts <= 3) {
+                this.attempts++;
+            } else {
+
+            }
 
             dicesTobeToggled.forEach(dice => this.diceClickedToggle(dice));
         }

@@ -436,3 +436,7 @@ nav {
 	margin: 10px 10px;
 	padding: 10px;
 }
+
+.avoid-click {
+	pointer-events: none;
+}
