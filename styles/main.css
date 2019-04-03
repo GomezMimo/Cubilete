@@ -440,3 +440,16 @@ nav {
 .avoid-click {
 	pointer-events: none;
 }
+
+.game-content__title {
+}
+
+.game-content__title-container ul {
+	list-style: circle;
+	margin: 20px;
+}
+
+.table-of-results__container {
+	color: #000000;
+	margin-top: 30px;
+}

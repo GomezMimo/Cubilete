@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a39fffd-b9f2-4af1-8d92-355ffd96f3fe" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/main.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,8 +29,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/game.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+            <state relative-caret-position="345">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -36,8 +38,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="222" selection-start-line="222" selection-end-line="222" />
+            <state relative-caret-position="686">
+              <caret line="253" column="35" selection-start-line="253" selection-start-column="35" selection-end-line="253" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -54,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/styles/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="439" column="1" selection-start-line="439" selection-start-column="1" selection-end-line="439" selection-end-column="13" />
+            <state relative-caret-position="680">
+              <caret line="453" column="21" selection-start-line="453" selection-start-column="21" selection-end-line="453" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -71,20 +73,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>module</find>
-      <find>hasActiveClass</find>
-      <find>input</find>
-      <find>main-content__container</find>
-      <find>Cubilete</find>
-      <find>play-game-content__container</find>
-      <find>nav</find>
-      <find>paintTable</find>
-      <find>playersInGame</find>
-      <find>player-board</find>
-      <find>dice</find>
-      <find>dice_value</find>
       <find>id</find>
-      <find>repeat-move__button</find>
       <find>find</find>
       <find>gameContainer</find>
       <find>handGame</find>
@@ -95,12 +84,25 @@
       <find>dice__container&quot;</find>
       <find>removeEv</find>
       <find>entra acá</find>
-      <find>console.l</find>
       <find>console</find>
       <find>next-player__button</find>
       <find>playByRoundsGame</find>
       <find>generateNewDiceValues</find>
       <find>hand</find>
+      <find>complete__button</find>
+      <find>checkHandValues</find>
+      <find>paint</find>
+      <find>tableResultsContent</find>
+      <find>players</find>
+      <find>ul</find>
+      <find>playersInformation</find>
+      <find>points</find>
+      <find>.sort</find>
+      <find>result</find>
+      <find>console.l</find>
+      <find>winner</find>
+      <find>repeat-move__button</find>
+      <find>if (result.handGame) {</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -112,8 +114,8 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/index2.html" />
-        <option value="$PROJECT_DIR$/pages/game.html" />
         <option value="$PROJECT_DIR$/TODO-List" />
+        <option value="$PROJECT_DIR$/pages/game.html" />
         <option value="$PROJECT_DIR$/styles/main.css" />
         <option value="$PROJECT_DIR$/scripts/index.js" />
       </list>
@@ -174,12 +176,12 @@
       <option name="presentableId" value="Default" />
       <updated>1553716621984</updated>
       <workItem from="1553716623070" duration="9894000" />
-      <workItem from="1554224648740" duration="7475000" />
+      <workItem from="1554224648740" duration="14095000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29071000" />
+    <option name="totallyTimeSpent" value="35691000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -207,7 +209,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32923833" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32923833" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32923833" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -216,6 +218,18 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/scripts/index.js</url>
+          <line>178</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/package.json">
@@ -242,22 +256,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/game.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+        <state relative-caret-position="345">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/styles/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="439" column="1" selection-start-line="439" selection-start-column="1" selection-end-line="439" selection-end-column="13" />
+        <state relative-caret-position="680">
+          <caret line="453" column="21" selection-start-line="453" selection-start-column="21" selection-end-line="453" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="222" selection-start-line="222" selection-end-line="222" />
+        <state relative-caret-position="686">
+          <caret line="253" column="35" selection-start-line="253" selection-start-column="35" selection-end-line="253" selection-end-column="35" />
         </state>
       </provider>
     </entry>

@@ -37,6 +37,7 @@ class Cubilete {
         this.sendButton.addEventListener('click', () => {
             this.sendForm();
         });
+        this.round = 1;
     }
 
     sendForm() {
@@ -44,22 +45,33 @@ class Cubilete {
         const numberOfPlayers = numberOfPlayersInput.value;
         this.gameContainer = document.querySelector('.play-game-content__container');
         let players = '';
+        this.gameContainer.innerHTML += `<div class="game-content__title-container">
+                    <h1 class="game-content__title">Comienzo del juego</h1>
+                        <ul>
+                            <li>Comienza el juego el jugador con mayor puntaje en el dado</li>
+                        </ul>
+                </div>
+        `;
 
         if (numberOfPlayers > 1 && numberOfPlayers < 6) {
             for (let i = 0; i < numberOfPlayers; i++) {
                 this.playersInformation.push({
-                   name: `Jugador #${i + 1}`
+                   name: `Jugador #${i + 1}`,
+                   diceSum: 0,
+                   points: 0
                 });
 
-                players += `<div class='player-board player-board-grill-${numberOfPlayers}'>
+                players += `
+                             <div class='player-board player-board-grill-${numberOfPlayers}'>
                                 <h2>${this.playersInformation[i].name}</h2>
                                 <div class="dice__container"><span class="dice__value" id="dice_value_${i}">${this.literalDiceValues[12]}</span></div>                             
                                 <button class="player-play__button">Tirar</button>
-                            </div>`;
+                            </div>
+                `;
             }
 
             if (players) {
-                this.gameContainer.innerHTML = players;
+                this.gameContainer.innerHTML += players;
                 this.sendButton.classList.add('hide-element');
                 numberOfPlayersInput.classList.add('hide-element');
 
@@ -105,7 +117,9 @@ class Cubilete {
 
     playByRoundsGame() {
         const winner = this.playersInformation.find(player => player.points >= 10);
+        console.log('winner', winner);
         const playerInGame = this.playersInformation[this.playerPosition];
+        const gameTitle = document.querySelector('.game-content__title-container');
         playerInGame.handGame = [];
 
         for(let i = 0; i < 5; i++) {
@@ -134,7 +148,9 @@ class Cubilete {
 
             document.querySelector('.next-player__button').addEventListener('click', () => {
                 if (this.playerPosition >= this.playersInformation.length - 1) {
+                    this.updatePoints();
                     this.playerPosition = 0;
+                    this.round++;
                 } else {
                     this.playerPosition++;
                 }
@@ -148,18 +164,43 @@ class Cubilete {
 
             document.querySelector('.complete__button').addEventListener('click', this.checkHandValues.bind(this));
 
-            repeatMoveButton.addEventListener('click', this.generateNewDiceValues);
-
             diceContainers.forEach(container => {
                 container.addEventListener('click', () => this.diceClickedToggle(container));
             });
 
             repeatMoveButton.addEventListener('click', this.generateNewDiceValues.bind(this));
         } else {
-            alert('congratulations Mr Tanaka, you are an engineer');
+            alert(`Felicidades, el ganador es el ${winner.name} con un total de ${winner.points}`);
         }
 
-        this.tableOfResultsContainer.innerHTML = this.paintTable(this.playersInformation, 'Turnos', 'Turno', 'Nombre', 'Puntos');
+        let tableResultsContent = `<h3>Ronda ${this.round}</h3>`
+        tableResultsContent += `<table><tr><th colspan="4">Puntajes</th></tr><tr><th>Turno</th><th>Nombre</th><th>Juego</th><th>Puntos</th></tr>`;
+
+        this.playersInformation.forEach((result, index) => {
+            let hand = '';
+
+            if (result.handGame) {
+                result.handGame.forEach(game => {
+                    hand += ` ${this.literalDiceValues[game.value]}`
+                });
+            } else {
+                hand = '-';
+            }
+
+            tableResultsContent += `                                
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${result.name}</td>
+                                    <td class="hand-game__table-data">${hand}</td>
+                                    <td class="points-cell-${index}">${result.points}</td>
+                                </tr>
+                
+            `;
+        });
+
+        tableResultsContent += `</table>`;
+
+        this.tableOfResultsContainer.innerHTML = tableResultsContent;
     }
 
     diceClickedToggle(container) {
@@ -189,6 +230,7 @@ class Cubilete {
 
         if (this.dicesToBeChanged) {
             const playerInformation = this.playersInformation[this.playerPosition];
+            const tableDataGame = document.querySelector('.hand-game__table-data');
 
             this.dicesToBeChanged.forEach(dice => {
                 const diceElementById = document.getElementById(`${dice.cardId}`);
@@ -199,7 +241,21 @@ class Cubilete {
                 dicesTobeToggled.push(diceElementById.parentNode);
             });
 
+            let hand = '';
+
+            if (playerInformation.handGame) {
+                playerInformation.handGame.forEach(game => {
+                    hand += ` ${this.literalDiceValues[game.value]}`
+                });
+            } else {
+                hand = '-';
+            }
+
+            tableDataGame.innerHTML = hand;
+
             this.attempts++;
+
+            console.log('playerInformation', playerInformation);
 
             dicesTobeToggled.forEach(dice => this.diceClickedToggle(dice));
         }
@@ -214,12 +270,39 @@ class Cubilete {
         });
 
         if (points === 60) {
-            alert('you win')
+            playerInGame.points = 10;
         } else if (points === 55) {
-            alert('5 points')
+            playerInGame.points = 5;
         } else {
 
         }
+    }
+
+    updatePoints() {
+        this.playersInformation.forEach((player, index) => {
+            player.diceSum = 0;
+            player.handGame.forEach(game => {
+                player.diceSum += game.value
+            });
+        });
+
+        const playersInformation = this.playersInformation.slice();
+
+        const roundWinner = playersInformation.sort((a, b) => {
+            console.log('a', a.diceSum);
+            console.log('b', b.diceSum);
+            return b.diceSum - a.diceSum;
+        });
+
+        if (roundWinner[0].diceSum === 60) {
+            roundWinner[0].points += 10;
+        } else if (roundWinner[0].diceSum === 55) {
+            roundWinner[0].points += 5;
+        } else {
+            roundWinner[0].points += 1;
+        }
+
+        console.log('roundWinner', roundWinner);
     }
 
     paintTable(iterableElement, titulo, th1, th2, th3) {
