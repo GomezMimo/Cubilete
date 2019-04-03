@@ -117,7 +117,6 @@ class Cubilete {
 
     playByRoundsGame() {
         const winner = this.playersInformation.find(player => player.points >= 10);
-        console.log('winner', winner);
         const playerInGame = this.playersInformation[this.playerPosition];
         const gameTitle = document.querySelector('.game-content__title-container');
         playerInGame.handGame = [];
@@ -255,8 +254,6 @@ class Cubilete {
 
             this.attempts++;
 
-            console.log('playerInformation', playerInformation);
-
             dicesTobeToggled.forEach(dice => this.diceClickedToggle(dice));
         }
     }
@@ -289,8 +286,6 @@ class Cubilete {
         const playersInformation = this.playersInformation.slice();
 
         const roundWinner = playersInformation.sort((a, b) => {
-            console.log('a', a.diceSum);
-            console.log('b', b.diceSum);
             return b.diceSum - a.diceSum;
         });
 
@@ -301,8 +296,6 @@ class Cubilete {
         } else {
             roundWinner[0].points += 1;
         }
-
-        console.log('roundWinner', roundWinner);
     }
 
     paintTable(iterableElement, titulo, th1, th2, th3) {
